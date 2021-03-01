@@ -12,9 +12,7 @@ export default function App() {
 
     function result() {
         return (
-
-
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">RA</th>
@@ -38,8 +36,6 @@ export default function App() {
                     </tr>
                 </tbody>
             </table>
-
-
         )
     }
     return (

@@ -4,19 +4,22 @@ export default function Menu() {
 
     return (
         <div className="contaner">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <a className="navbar-brand" href="#">Fatec Franca</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">Home <span className="sr-only"></span></a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Cadastro de usuário <span class="sr-only"></span></a>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="#">Consulta <span className="sr-only"></span></a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">Cadastro de usuário <span className="sr-only"></span></a>
                         </li>
                     </ul>
                 </div>
