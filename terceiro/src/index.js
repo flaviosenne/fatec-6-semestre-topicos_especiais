@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom'
+import Menu from './Menu';
 import Views from './routes'
 
 ReactDOM.render(
-  
-    <Views/>,
+  <>
+    <Menu/>
+  <BrowserRouter>
+    <Views/>
+  </BrowserRouter>
+  </>,
   document.getElementById('root')
 );
 
