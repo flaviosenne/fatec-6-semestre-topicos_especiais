@@ -13,4 +13,4 @@ mongoose.connection.on('connected', () =>
    )
 
 
-app.listen(3000, ()=> console.log("server running 3000"))
+app.listen(3000, ()=> console.log("servidor rodando 3000"))
