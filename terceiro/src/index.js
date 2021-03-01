@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom'
-import Menu from './Menu';
+import Headers from './Header';
 import Views from './routes'
 
 ReactDOM.render(
   <>
-    <Menu/>
   <BrowserRouter>
+    <Headers/>
     <Views/>
   </BrowserRouter>
   </>,
