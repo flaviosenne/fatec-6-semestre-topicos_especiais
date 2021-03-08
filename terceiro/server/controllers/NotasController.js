@@ -4,7 +4,7 @@ module.exports = {
     async insere(req, res){
         const nota = {ra, nome, disciplina, p1, p2, media , curso} = req.body
 
-        await notas.save(nota)
+        await notas.create(nota)
 
         res.json(nota)
     },

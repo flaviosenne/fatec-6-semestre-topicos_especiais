@@ -15,7 +15,7 @@ export default Headers = () => {
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="consulta">Consulta</Link>
+                            <Link className="nav-link" to="/consulta">Consulta</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/cadastro">Cadastrar</Link>

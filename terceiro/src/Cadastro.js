@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { useHistory } from 'react-router'
 
 export default function App() {
     const [ra, setRa] = useState(0)
@@ -8,39 +10,19 @@ export default function App() {
     const [media, setMedia] = useState(0)
     const [curso, setCurso] = useState(0)
     const [disciplina, setDsciplina] = useState(0)
-
-
-    function result() {
-        return (
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">RA</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Curso</th>
-                        <th scope="col">Dsciplina</th>
-                        <th scope="col">P1</th>
-                        <th scope="col">P2</th>
-                        <th scope="col">Media</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">{ra}</th>
-                        <td>{nome}</td>
-                        <td>{curso}</td>
-                        <td>{disciplina}</td>
-                        <td>{p1}</td>
-                        <td>{p2}</td>
-                        <td>{media}</td>
-                    </tr>
-                </tbody>
-            </table>
-        )
+   
+    const history = useHistory()
+    async function cadastrar(){
+        setMedia((Number(p1) + Number(p2))/2 )
+        await axios.post('http://localhost:3001/nota',
+         {ra, nome, disciplina, p1, p2, media , curso})
+         .then(res => {
+            console.log(res)
+            history.push('/consulta')
+        })
     }
     return (
         <div className="container">
-            {result()}
             <div >
                 <label className="form-group">RA</label>
                 <input className="input-group" type="text" value={ra} onChange={(e) => setRa(e.target.value)} />
@@ -63,7 +45,7 @@ export default function App() {
 
                 <br />
             <div>
-                <button className="btn btn-primary" type="button" onClick={() => setMedia((Number(p1) + Number(p2))/2 )}> Calcular média</button>
+                <button className="btn btn-primary" type="button" onClick={() => cadastrar()}> cadastrar</button>
             </div>
 
         </div>
