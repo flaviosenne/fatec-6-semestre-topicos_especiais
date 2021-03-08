@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const {model, Schema} = require('mongoose')
 
-module.exports = mongoose.model("notas", mongoose.Schema(new Schema({
+module.exports = model("notas", Schema({
     ra: {type: Number, required: true},
     nome: {type: String, required: true},
     curso: {type: String, required: true},
@@ -8,4 +8,4 @@ module.exports = mongoose.model("notas", mongoose.Schema(new Schema({
     p1: {type: Number, required: true},
     p2: {type: Number, required: true},
     media: {type: Number, required: true},
-})))
+}), 'notas')
