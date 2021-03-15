@@ -18,16 +18,15 @@ module.exports = {
     },
 
     async remove(req, res){
-        notas.findByIdAndDelete(req.params.id).then(result => {
-            res.status(400).json({msg: "removido"})
+        console.log("id> ", req.params.id)
+        notas.findByIdAndDelete({_id: req.params.id}).then(result => {
+            res.status(204).json({msg: "removido"})
         })
     },
 
     async editar(req, res){
-        const {ra, nome, disciplina, p1, p2, media , curso} = req.body
-
-        notas.findByIdAndUpdate({_id: req.params.id, }, 
-            {ra, nome, disciplina, p1, p2, media , curso}).then(result => {
+     
+        notas.findByIdAndUpdate(req.params.id, req.body).then(result => {
             res.status(400).json({msg: "atualizado"})
         })
     }

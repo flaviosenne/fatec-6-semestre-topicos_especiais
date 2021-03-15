@@ -1,22 +1,30 @@
 import react, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default function Consulta() {
     const [datas, setDatas] = useState([])
 
     useEffect(async () => {
         await axios.get('http://localhost:3001/nota').then(resp => {
-            setDatas(resp.data[0])
+            setDatas(resp.data)
 
-            console.log("datas", datas)
         }).catch(err => console.log(err))
-        
-        datas.forEach(data => {
-            console.log("data", data)
-            
-        })
-    }, 1)
 
+    }, [])
+
+
+    function remove(id) {
+
+        axios.delete('http://localhost:3001/nota/' + id).then(async resp => {
+            if (resp.status == 204) {
+                await axios.get('http://localhost:3001/nota').then(resp => {
+                    setDatas(resp.data)
+
+                }).catch(err => console.log(err))
+            }
+        })
+    }
     return (
         <table className="table">
             <thead>
@@ -28,23 +36,28 @@ export default function Consulta() {
                     <th scope="col">P1</th>
                     <th scope="col">P2</th>
                     <th scope="col">Media</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {datas.forEach(data => {
-                    
-                        return (
-                            <tr>
+                {datas.map(data => {
+
+                    return (
+                        <tr>
                             <td> {data.ra}</td>
                             <td>{data.nome}</td>
                             <td>{data.curso}</td>
                             <td>{data.disciplina}</td>
                             <td>{data.p1}</td>
                             <td>{data.p2}</td>
-                            <td>{data.media}</td>
+                            <td>{(data.p1 + data.p2) / 2}</td>
+                            <td>
+                                <button className="btn btn-success" >Editar</button>
+                                <Link to="/consulta" className="btn btn-danger" onClick={e => remove(data._id)}>Excluir</Link>
+                            </td>
                         </tr>
                     )
-               
+
                 })}
 
             </tbody>
