@@ -26,8 +26,11 @@ module.exports = {
 
     async editar(req, res){
      
-        notas.findByIdAndUpdate(req.params.id, req.body).then(result => {
-            res.status(400).json({msg: "atualizado"})
+        const { nome, ra, displina, curso, p1, p2} = req.body
+        console.log('estou aqui')
+        notas.findByIdAndUpdate({_id: req.params.id, nome, ra, displina, curso, p1, p2}).then(result => {
+            res.status(200).json({msg: "atualizado"})
         })
+        console.log('deu certo')
     }
 }

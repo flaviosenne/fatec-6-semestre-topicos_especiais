@@ -52,7 +52,7 @@ export default function Consulta() {
                             <td>{data.p2}</td>
                             <td>{(data.p1 + data.p2) / 2}</td>
                             <td>
-                                <button className="btn btn-success" >Editar</button>
+                                <Link to ={"atualiza/"+data._id} className="btn btn-success" >Editar</Link>
                                 <Link to="/consulta" className="btn btn-danger" onClick={e => remove(data._id)}>Excluir</Link>
                             </td>
                         </tr>
