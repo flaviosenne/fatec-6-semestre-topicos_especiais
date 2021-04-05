@@ -1,8 +1,8 @@
 import { Router} from 'express'
-import { Funcionario } from './controllers/Funcionario'
+import { NotasController } from './controllers/NotasController'
 const route = Router()
-const funcionarioCoontroller = new Funcionario()
+const notasController = new NotasController()
 
-route.get('/', funcionarioCoontroller.get)
+route.get('/', notasController.get)
 
 export {route }
