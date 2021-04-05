@@ -24,7 +24,7 @@ module.exports = {
         })
     },
 
-    async editar(req, res){
+    async update(req, res){
      
         const { nome, ra, displina, curso, p1, p2} = req.body
         console.log('estou aqui')
