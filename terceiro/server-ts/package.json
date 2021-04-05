@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev":"concurrently \" npm run build\" \"npm run server\" ",
+    "start": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "build":"tsc",
+    "server": "nodemon dist/server.js"
+  
   },
   "keywords": [],
   "author": "",
