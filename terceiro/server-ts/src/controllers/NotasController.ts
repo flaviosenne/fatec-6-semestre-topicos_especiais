@@ -53,10 +53,11 @@ class NotasController {
 
         const notas: NotasInterface = req.body;
         try {
-
-            await Notas.findByIdAndUpdate({ _id: req.params.id, notas }).then(result => {
-                res.status(200).json({ msg: "atualizado" })
+            
+            await Notas.findByIdAndUpdate({ _id: req.params.id }, notas).then(result => {
+                return res.status(200).json({ msg: "atualizado" })
             })
+            
         } catch (err) {
             return res.status(500).json({ msg: 'houve um erro na requisição' })
         }
