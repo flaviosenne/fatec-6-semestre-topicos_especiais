@@ -20,7 +20,7 @@ class ClientControllerSQL {
             query(`insert into clients(nome, cpf, rg, endereco)
             values($1, $2, $3, $4)`, [nome, cpf, rg, endereco])
 
-            return res.status(201).json("cliente salvo")
+            return res.status(201).json("cliente salvo "+data)
 
         } catch (err) {
             return res.status(500).json({ msg: 'houve um erro na requisição' })
