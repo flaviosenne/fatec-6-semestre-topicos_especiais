@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import Notas from '../models/Notas';
 
 class NotasController {
-    get = async (req: Request, res: Response) => {
+    get = async (req: Request, res: Response): Promise<Response> => {
         try {
             const data: Document<NotasInterface>[] = await Notas.find()
 
@@ -14,10 +14,8 @@ class NotasController {
         }
     }
 
-    save = async (req: Request, res: Response) => {
+    save = async (req: Request, res: Response): Promise<Response> => {
         const notas: NotasInterface = req.body;
-
-        console.log(req.body)
 
         try {
             const data: Document<NotasInterface> = await Notas.create(notas)
@@ -29,7 +27,7 @@ class NotasController {
         }
     }
 
-    async getById(req: Request, res: Response) {
+    async getById(req: Request, res: Response): Promise<Response> {
         try {
             const data: Document<NotasInterface> = await Notas.findById(req.params.id)
             return res.status(200).json(data)
@@ -39,7 +37,7 @@ class NotasController {
         }
     }
 
-    async remove(req: Request, res: Response) {
+    async remove(req: Request, res: Response): Promise<Response> {
         try {
             await Notas.findByIdAndDelete({ _id: req.params.id }).then(result => {
                 res.status(204).json({ msg: "removido" })
@@ -49,7 +47,7 @@ class NotasController {
         }
     }
 
-    async update(req: Request, res: Response) {
+    async update(req: Request, res: Response): Promise<Response> {
 
         const notas: NotasInterface = req.body;
         try {
