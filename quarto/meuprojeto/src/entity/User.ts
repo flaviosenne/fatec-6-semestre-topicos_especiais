@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Photo } from './Photo';
+import { Column, PrimaryGeneratedColumn, Entity, OneToOne } from 'typeorm';
 
 
 @Entity()
@@ -16,4 +17,6 @@ export class Client {
     @Column()
     age: number;
 
+    @OneToOne(() => Photo, photo => photo.client)
+    photo: Photo 
 }

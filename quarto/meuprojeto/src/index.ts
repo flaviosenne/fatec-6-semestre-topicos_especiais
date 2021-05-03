@@ -1,21 +1,33 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import {Client} from "./entity/User";
+import {Photo} from "./entity/Photo";
+import { Client } from "./entity/User";
 
 createConnection().then(async connection => {
+    let photo = new Photo()
+    photo.name = 'Amazônia'
+    photo.description = 'Amazônia legal'
+    photo.fileName = 'amazonia.png'
+    photo.views = 30
+    photo.isPublished = true
 
-    console.log("Inserting a new user into the database...");
-    const user = new Client();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
-    await connection.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
+    let client = new Client()
+    client.age = 23,
+    client.firstName = 'jose'
+    client.lastName = 'antonio'
+    client.photo = photo
 
-    console.log("Loading users from the database...");
-    const users = await connection.manager.find(Client);
-    console.log("Loaded users: ", users);
+    let clientRepository = connection.getRepository(Client)
+    let photoRepository = connection.getRepository(Photo)
 
-    console.log("Here you can setup and run express/koa/any other framework.");
+    await photoRepository.save(photo)
+    await clientRepository.save(client)
+
+    let clients = await clientRepository
+    .createQueryBuilder('client')
+    .innerJoinAndSelect('client.photo', 'photo')
+    .getMany()
+
+    console.log('client ', clients)
 
 }).catch(error => console.log(error));
