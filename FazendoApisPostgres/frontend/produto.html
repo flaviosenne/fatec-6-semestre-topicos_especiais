@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    </head>
+    <body onload="consultar()">
+        <header>
+            <div class="container">
+                <!-- barra de navegação com cor azul -->
+                <nav class="navbar bg-primary navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="index.html" > 
+                       <img src="produto.png" width="120" height="80"/>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#conteudoMenu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="conteudoMenu"> 
+                        <!-- lista da barra de navegação -->
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-white"> Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white"> Produtos </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white"> Compra </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white"> Contato </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white"> Sobre </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <section>
+            <div class="container">
+                <form>
+                    <input hidden id="id"/> <!-- entrada de dados escondida do usuário final -->
+                    <div>
+                        <label class="form-label"> Nome </label>
+                        <input type="text" class="form-control" id="nome"/>
+                    </div>
+                    <div>
+                        <label class="form-label"> Quantidade </label>
+                        <input type="number" class="form-control" id="qtde"/>
+                    </div>
+                    <div>
+                        <label class="form-label"> Valor </label>
+                        <input type="number" class="form-control" id="valor"/>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-success" onClick="cadastrar()"> Cadastra Produto </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr> <td> Nome </td> <td> Quantidade </td> <td> Valor </td> <td> Remove </td> <td> Atualiza </td> </tr> 
+                    </thead>
+                    <tbody id="conteudoTabela">
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <footer>
+
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <script>
+            function cadastrar(){
+                // recuperar dados do formulário
+                let nome = document.getElementById("nome").value
+                let qtde = Number(document.getElementById("qtde").value)
+                let valor = Number(document.getElementById("valor").value)
+                // cria o objeto
+                let produto = new Object()
+                produto.nome = nome
+                produto.qtde = qtde
+                produto.valor = valor
+                // consumir a API
+                let id = document.getElementById("id").value // pega valor id do produto
+                let verbo 
+                if (id == "") {// cadastro
+                    verbo = 'POST'
+                }
+                else {
+                    verbo = 'PUT'
+                    produto.id = id
+                }
+                let req = new XMLHttpRequest() // AJAX
+                req.open(verbo, 'http://localhost:8080/produto', true) // true -> conexão assíncrona
+                // configura cabeçalho da conexão
+                req.setRequestHeader('Content-Type', 'application/json')
+                req.send(JSON.stringify(produto)) // envia um produto na forma de string
+                alert('Produto inserido com sucesso')
+                consultar()
+            }
+            function consultar(){
+
+                // abrir a consultar
+                let request = new XMLHttpRequest()
+                request.open('GET', 'http://localhost:8080/produto', true) // assíncrona
+                // recupera o resultado de todos os produtos
+                // converte em JSON
+                request.onload = function() {
+                    let produtos = JSON.parse(this.response)
+                    // mostra na página
+                    // estrutura de repetição
+                    let acumulaSaida = ""
+                    produtos.forEach( produto => {
+                        // vamos colocar dentro da tabela
+                        acumulaSaida = acumulaSaida + `<tr> <td> ${produto.nome} </td> <td> ${produto.qtde} </td> <td> ${produto.valor} </td> <td> <i onClick="remove(${produto.id})"class="bi bi-trash"></i> </td> <td> <i onClick="atualiza(${produto.id}, '${produto.nome}', ${produto.qtde}, ${produto.valor})" class="bi bi-arrow-clockwise"></i> </td> </tr>`
+                    })
+                    // coloca no conteúdo da tabela
+                    document.getElementById("conteudoTabela").innerHTML = acumulaSaida
+                }
+               
+                request.send()
+            }
+            function atualiza(id, nome, qtde, valor){
+                // pegar os dados escolhidos para atualizar e colocar no formulário
+                document.getElementById("nome").value = nome
+                document.getElementById("qtde").value = qtde
+                document.getElementById("valor").value = valor
+                // enviar também o ID
+                document.getElementById("id").value = id
+            }
+            
+            function remove(id){
+                let request = new XMLHttpRequest()
+                request.open('DELETE', `http://localhost:8080/produto/${id}`, true)
+                request.send()
+                alert(`Produto removido com sucesso`)
+                consultar() // atualiza tabela
+            }
+        </script>
+    </body>
+</html>

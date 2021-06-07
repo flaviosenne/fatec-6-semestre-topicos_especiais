@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tela de autenticação</title>
+    <script>
+        function fazerLogin(){
+            // recupera dados
+            let email = document.getElementById("email").value
+            let senha = document.getElementById("senha").value
+            // conecta no servidor
+            let request = new XMLHttpRequest()
+            request.open('GET', `http://localhost:8080/usuario/email/${email}`)
+            // verifica se a senha está correta
+            request.onload = function(){
+                let usuario = JSON.parse(this.response) // transforma resposta de string para JSON
+                if (usuario.senha == senha){
+                    alert(`Autenticação com sucesso`)
+                }
+                else {
+                    alert(`Problema no usuário/senha`)
+                }
+            } 
+            request.send()
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <header>
+
+        </header>
+        <main>
+            <form> 
+                <div> 
+                    <label> Email </label>
+                    <input type="email" id="email"> 
+                </div> 
+                <div>
+                    <label> Senha </label>
+                    <input type="password" id="senha">
+                </div>
+                <div>
+                    <button type="button" onClick="fazerLogin()"> Autenticar </button>
+                </div>
+            </form>
+        </main>
+        <footer>
+
+        </footer>
+    </div>
+</body>
+</html>
